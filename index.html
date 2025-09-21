@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coffee Shop POS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>☕ Coffee Shop POS</h1>
+  <div id="order">
+    <button onclick="pay('Latte',150)">Latte - ₱150</button>
+    <button onclick="pay('Cappuccino',180)">Cappuccino - ₱180</button>
+    <button onclick="pay('Iced Americano',120)">Iced Americano - ₱120</button>
+  </div>
+  <div id="result"></div>
+
+  <script>
+    async function pay(item, price) {
+      const res = await fetch('/api/pay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item, price })
+      });
+      const data = await res.json();
+      document.getElementById('result').innerText =
+        `✅ Payment Success: ${data.item} - ₱${data.price}`;
+    }
+  </script>
+</body>
+</html>
